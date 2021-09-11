@@ -4,9 +4,10 @@ import java.net.UnknownHostException
 import java.util.*
 
 class Task {
-    val title: String
-    val date: String
-    val hour: String
+    var title: String
+    var date: String = "00/00/0000"
+    var hour: String = "0"
+    var id: Int = 0
 
     constructor(title: String) {
         this.id = -1

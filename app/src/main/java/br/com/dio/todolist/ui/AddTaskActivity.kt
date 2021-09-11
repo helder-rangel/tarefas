@@ -24,8 +24,8 @@ class AddTaskActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         if (intent.hasExtra(TASK_ID)) {
-            val taskId = intent.getIntExtra(TASK_ID, 0)
-            TaskDataSource.findById(taskId)?.let {
+            val id = intent.getIntExtra(TASK_ID, 0)
+            TaskDataSource.findById(id)?.let {
                 binding.tilTitle.text = it.title
                 binding.tilDate.text = it.date
                 binding.tilHour.text = it.hour
@@ -81,7 +81,7 @@ class AddTaskActivity : AppCompatActivity() {
 
 
     companion object {
-        const val TASK_ID = "task_id"
+        const val TASK_ID = id
     }
 
 }

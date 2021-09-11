@@ -36,20 +36,31 @@ class TaskDAO (context: Context){
         return list
     }
 
-    fun get(id: Int): Task?{
-        val where = "id = ?"
+    fun get(id: Int): Task? {
+        var list:Task? = null
+        val where: String = "id = ?"
         val pWhere = arrayOf(id.toString())
         val columns = arrayOf("id", "title", "date", "hour")
-        val cursor = this.database.readableDatabase.query("tasks",columns, id,where,pwhere)
-        if(cursor.count == 1){
-            return id
+        val cursor =
+            this.database.readableDatabase.query("tasks", columns, where, pWhere, null, null, null)
+        cursor.moveToFirst()
+        for (i in 1..cursor.count) {
+            if (cursor.count == 1) {
+                val id = cursor.getInt(cursor.getColumnIndex("id"))
+                val title = cursor.getString(cursor.getColumnIndex("title"))
+                val date = cursor.getString(cursor.getColumnIndex("date"))
+                val hour = cursor.getString(cursor.getColumnIndex("hour"))
+                list = (Task(id, title, date, hour))
+                cursor.moveToNext()
+                return list
+            }
         }
         return null
     }
 
     fun delete(task: Task){
         val where = "id = ?"
-        val pWhere = arrayOf(task.id.toString())
+        val pWhere = arrayOf(task.toString())
         val columns = arrayOf("id", "title", "date", "hour")
         this.database.writableDatabase.delete("tasks", where,pWhere)
     }
@@ -57,11 +68,11 @@ class TaskDAO (context: Context){
     fun update(task: Task){
         val cv = ContentValues()
         val where = "id = ?"
-        val pWhere = arrayOf(task.id.toString())
+        val pWhere = arrayOf(task.toString())
 
-        cv.put("title")
-        cv.put("date")
-        cv.put("hour")
-        this.database.writableDatabase.update("tasks", cv, where, pwhere)
+        cv.put("title", task.title)
+        cv.put("date", task.date)
+        cv.put("hour", task.hour)
+        this.database.writableDatabase.update("tasks", cv, where, pWhere)
     }
 }

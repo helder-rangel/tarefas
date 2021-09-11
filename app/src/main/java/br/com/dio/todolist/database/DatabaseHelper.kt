@@ -6,11 +6,11 @@ import android.database.sqlite.SQLiteOpenHelper
 
 class DatabaseHelper(context: Context): SQLiteOpenHelper(context, "tasks.dat", null, 1) {
 
-    ovverride onCreate(db: SQLiteDatabase?) {
+    override fun onCreate(db: SQLiteDatabase?){
         val sql = "create table tasks( " +
-                "id integer primary key autoincrement," +
-                "title text," +
-                "date text," +
+                "id integer primary key autoincrement, " +
+                "title text, " +
+                "date text, " +
                 "hour text)"
         db?.execSQL(sql)
     }
